@@ -1,0 +1,57 @@
+{
+  "name": "issue-cds-typer",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "npm": ">8.0.0",
+    "node": ">18.0.0"
+  },
+  "workspaces": [
+    "./app/*"
+  ],
+  "scripts": {
+    "start": "npx cds-ts serve all --with-mocks --in-memory",
+    "cds-typer": "npx @cap-js/cds-typer \"*\" --outputDirectory ./@cds-models/",
+    "test_compile": "npx cds-ts srv -s all -l all -2 edmx > NUL",
+    "test_compile2": "npx cds-ts srv -s all -l all -2 edmx -o out",
+    "watch-hybrid": "npx cds-ts watch --profile hybrid",
+    "deploy": "cf deploy mta_archives/%npm_package_name%_%npm_package_version%.mtar --retries 1",
+    "undeploy": "cf undeploy %npm_package_name% --delete-services --delete-service-keys --delete-service-brokers",
+    "dump-db": "sqlite3 ./db.sqlite .dump > dump.txt",
+    "clean-db": "rimraf sqlite.db",
+    "build": "npx tsc",
+    "clean": "",
+    "predeploy": "npm run build",
+    "prebuild": "npm run clean",
+    "postbuild": "npm run copy && npx mbt build --mtar %npm_package_name%_%npm_package_version%.mtar",
+    "copy": "copyfiles -f \"./app/**/dist/zip/*.zip\" ./resources",
+    "postclean": "rimraf resources && rimraf gen && rimraf mta_archives",
+    "bind": "npx cds-ts bind -2 %npm_package_name%.destination,%npm_package_name%.xsuaa"
+  },
+  "dependencies": {
+    "@sap/cds": "7.2.1",
+    "@sap/cds-common-content": "1.2.0",
+    "cds-swagger-ui-express": "0.6.0",
+    "express": "4.18.2",
+    "passport": "0.6.0",
+    "@sap/cds-fiori": "1.1.0",
+    "@cap-js/sqlite": "1.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.18",
+    "cds-launchpad-plugin": "1.0.9",
+    "npm-run-all": "4.1.5",
+    "copyfiles": "2.4.1",
+    "rimraf": "5.0.5",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2",
+    "@cap-js/cds-typer": "0.10.0"
+  },
+  "imports": {
+    "#cds-models/*": "./@cds-models/*/index.js"
+  }
+}

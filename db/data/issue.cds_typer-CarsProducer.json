@@ -1,0 +1,24 @@
+[
+  {
+    "ID": "A",
+    "name": "Anton",
+    "model": [
+      { "code": "model_A", "name": "Model A" },
+      { "code": "model_B", "name": "Model B" }
+    ]
+  },
+  {
+    "ID": "B",
+    "name": "Bertha",
+    "model": [
+      { "code": "prod_line_A", "name": "Prodline A" },
+      { "code": "prod_line_B", "name": "Prodline B" },
+      { "code": "design_line_X", "name": "Desing X" }
+    ]
+  },
+  {
+    "ID": "C",
+    "name": "Constantin",
+    "model": [{ "code": "concept_2023", "name": "concpt Cars 2023" }]
+  }
+]
